@@ -34,6 +34,7 @@ export type TStaff = {
   shift: "Morning" | "Day" | "Night";
   work_status: "full-time" | "part-time" | "contractual";
   status: "active" | "inactive";
+  isdeleted: boolean
 };
 
 // StaffModel ইন্টারফেসটি Mongoose মডেলকে বর্ণনা করে এবং একটি কাস্টম স্ট্যাটিক মেথড isStaffExists অন্তর্ভুক্ত করে যা একটি staffId গ্রহণ করে এবং সংশ্লিষ্ট TStaff অবজেক্ট বা null রিটার্ন করে।

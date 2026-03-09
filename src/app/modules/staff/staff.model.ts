@@ -44,6 +44,7 @@ const StaffSchema = new Schema<TStaff, StaffModel>({
     required: true,
   },
   status: { type: String, enum: ["active", "inactive"], required: true },
+  isdeleted: { type: Boolean, default: false },
 });
 
 //password hashing using bycript library
@@ -67,6 +68,10 @@ StaffSchema.pre("save", async function () {
 
 StaffSchema.post("save", async function (doc) {
   doc.password = "";
+});
+
+StaffSchema.pre("find", async function (this: any) {
+  this.find({ isdeleted: { $ne: true } });
 });
 
 StaffSchema.statics.isStaffExists = async function (staffId: string) {

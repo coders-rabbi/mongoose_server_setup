@@ -62,8 +62,29 @@ const getSingleStaff = async (req: Request, res: Response) => {
   }
 };
 
+const deleteSingleStaff = async (req: Request, res: Response) => {
+  try {
+    const { staffId } = req.params;
+    const result = await StaffService.deleteSingleStaffFromDB(
+      staffId as string,
+    );
+    res.status(200).json({
+      success: true,
+      message: "Single Staff deleted successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Staff deletting porccess failed ",
+      error: error,
+    });
+  }
+};
+
 export const StaffController = {
   createStaff,
   getAllstaffs,
   getSingleStaff,
+  deleteSingleStaff,
 };

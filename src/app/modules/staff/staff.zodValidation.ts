@@ -32,6 +32,7 @@ const createStaffZodSchema = z.object({
     shift: z.enum(["Morning", "Day", "Night"]),
     work_status: z.enum(["full-time", "part-time", "contractual"]),
     status: z.enum(["active", "inactive"]),
+    isdeleted: z.boolean(),
   }),
 });
 
