@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import { StaffService } from "./staff.service.js";
 import { StaffValidation } from "./staff.zodValidation.js";
-import { StaffModel } from "./staff.model.js";
+import { Staff } from "./staff.model.js";
 import { success } from "zod";
 
 const createStaff = async (req: Request, res: Response) => {
