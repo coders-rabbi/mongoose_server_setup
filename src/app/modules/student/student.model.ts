@@ -1,47 +1,166 @@
 import { Schema, model } from "mongoose";
-import type { Guardian, LocalGuardian, Student, UserName } from "./student.interface.js";
+import validator from "validator";
+import type {
+  Guardian,
+  LocalGuardian,
+  Student,
+  UserName,
+} from "./student.interface.js";
 
 const userNameSchema = new Schema<UserName>({
-  first_name: { type: String, required: true },
-  middle_name: { type: String },
-  last_name: { type: String, required: true },
+  first_name: {
+    type: String,
+    trim: true, // unnecessary space will be removed from the beginning and end of the string
+    required: [true, "First name is required"],
+    maxLength: [20, "First name cannot exceed 20 characters"],
+    minLength: [3, "First name must be at least 3 characters long"],
+    validate: {
+      validator: function (value: string) {
+        const firstNameStr = value.charAt(0).toUpperCase() + value.slice(1);
+        return firstNameStr === value;
+      },
+      message: "{VALUE} is not in capitalized format",
+    },
+  },
+  middle_name: {
+    type: String,
+    trim: true,
+    required: [true, "Middle name is required"],
+    maxLength: [20, "Middle name cannot exceed 20 characters"],
+    minLength: [3, "Middle name must be at least 3 characters long"],
+  },
+  last_name: {
+    type: String,
+    trim: true, // unnecessary space will be removed from the beginning and end of the string
+    required: [true, "Last name is required"],
+    maxLength: [20, "Last name cannot exceed 20 characters"],
+    minLength: [3, "Last name must be at least 3 characters long"],
+    validate: {
+      validator: function (value: string) {
+        const lastNameStr = validator.isAlpha(value, "en-US"); // allow spaces in the name
+        return lastNameStr;
+      },
+      message: "{VALUE} is not a valid last name",
+    },
+  },
 });
 
 const guardianSchema = new Schema<Guardian>({
-  father_name: { type: String, required: true },
-  father_occupation: { type: String, required: true },
-  father_contact_no: { type: String, required: true },
-  mother_name: { type: String, required: true },
-  mother_occupation: { type: String, required: true },
-  mother_contact_no: { type: String, required: true },
+  father_name: {
+    type: String,
+    required: [true, "Father's name is required"],
+    trim: true, // unnecessary space will be removed from the beginning and end of the string
+    maxLength: [50, "Father's name cannot exceed 50 characters"],
+  },
+  father_occupation: {
+    type: String,
+    required: [true, "Father's occupation is required"],
+  },
+  father_contact_no: {
+    type: String,
+    required: [true, "Father's contact number is required"],
+  },
+  mother_name: { type: String, required: [true, "Mother's name is required"] },
+  mother_occupation: {
+    type: String,
+    required: [true, "Mother's occupation is required"],
+  },
+  mother_contact_no: {
+    type: String,
+    required: [true, "Mother's contact number is required"],
+  },
 });
 
 const localGuardianSchema = new Schema<LocalGuardian>({
-  name: { type: String, required: true },
-  occupation: { type: String, required: true },
-  contact_no: { type: String, required: true },
+  name: { type: String, required: [true, "Local guardian name is required"] },
+  occupation: {
+    type: String,
+    required: [true, "Local guardian occupation is required"],
+  },
+  contact_no: {
+    type: String,
+    required: [true, "Local guardian contact number is required"],
+  },
 });
 
 const studentSchema = new Schema<Student>({
-  id: { type: String, required: true },
-  name: userNameSchema,
-  gender: { type: String, enum: ["male", "female"], required: true },
-  date_of_birth: { type: String, required: true },
-  phone: { type: String, required: true },
-  emergency_contact: { type: String, required: true },
-  email: { type: String, required: true },
-  age: { type: Number, required: true },
+  id: {
+    type: String,
+    required: [true, "Student ID is required"],
+    unique: true,
+  },
+  name: {
+    type: userNameSchema,
+    required: [true, "Student name details are required"],
+  },
+  gender: {
+    type: String,
+    enum: {
+      values: ["male", "female", "other"],
+      message: "{VALUE} is not a valid gender",
+    },
+    required: [true, "Gender is required"],
+  },
+  date_of_birth: {
+    type: String,
+    required: [true, "Date of birth is required"],
+  },
+  phone: {
+    type: String,
+    required: [true, "Phone number is required"],
+    maxLength: [15, "Phone number cannot exceed 15 digits"],
+  },
+  emergency_contact: {
+    type: String,
+    required: [true, "Emergency contact is required"],
+    maxLength: [15, "Emergency contact number cannot exceed 15 digits"],
+  },
+  email: {
+    type: String,
+    required: [true, "Email address is required"],
+    unique: true,
+    validate: {
+      validator: function (value: string){
+        const validEmail = validator.isEmail(value);
+        return validEmail;
+      },
+      message: "{VALUE} is not a valid email address"
+    }
+  },
+  age: { type: Number, required: [true, "Age is required"] },
   blood_group: {
     type: String,
-    enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
-    required: true,
+    enum: {
+      values: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+      message: "{VALUE} is not a valid blood group",
+    },
+    required: [true, "Blood group is required"],
   },
-  present_address: { type: String, required: true },
-  permanent_address: { type: String, required: true },
-  guardian: guardianSchema,
-  local_guardian: localGuardianSchema,
+  present_address: {
+    type: String,
+    required: [true, "Present address is required"],
+  },
+  permanent_address: {
+    type: String,
+    required: [true, "Permanent address is required"],
+  },
+  guardian: {
+    type: guardianSchema,
+    required: [true, "Guardian details are required"],
+  },
+  local_guardian: {
+    type: localGuardianSchema,
+    required: [true, "Local guardian details are required"],
+  },
   profile_image: { type: String },
-  isActive: { type: String, enum: ["active", "blocked"], required: true },
+  isActive: {
+    type: String,
+    enum: {
+      values: ["active", "blocked"],
+      message: "{VALUE} is not a valid status",
+    },
+    default: "active",
+  },
 });
 
 export const StudentModel = model<Student>("Student", studentSchema);

@@ -1,14 +1,22 @@
-import express, { type Application, type Request, type Response } from "express";
+import express, {
+  type Application,
+  type Request,
+  type Response,
+} from "express";
 import cors from "cors";
 import { StudentRoute } from "./app/modules/student/student.route.js";
+import { TeacherRouter } from "./app/modules/teacher/teacher.route.js";
+import { StaffRoute } from "./app/modules/staff/staff.route.js";
 const app: Application = express();
 
 //parsers
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 
 //application routes
 app.use("/api/v1/students/", StudentRoute);
+app.use("/api/v1/teachers/", TeacherRouter);
+app.use("/api/v1/staffs/", StaffRoute);
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello Rabbi!");
 });
