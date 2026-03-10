@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { TeacherService } from "./teacher.service.js";
-import { TeacherValidation } from "./teacher.validation.js";
+import { TeacherService } from "./faculty.service.js";
+import { TeacherValidation } from "./faculty.validation.js";
 
 const createTeacher = async (req: Request, res: Response) => {
   try {

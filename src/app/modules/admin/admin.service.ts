@@ -1,5 +1,5 @@
-import type { TStaff } from "./staff.interface.js";
-import { Staff } from "./staff.model.js";
+import type { TStaff } from "./admin.interface.js";
+import { Staff } from "./admin.model.js";
 
 const createStaffIntoDB = async (staff: TStaff) => {
   if (await Staff.isStaffExists(staff.staffId)) {

@@ -5,8 +5,8 @@ import express, {
 } from "express";
 import cors from "cors";
 import { StudentRoute } from "./app/modules/student/student.route.js";
-import { TeacherRouter } from "./app/modules/teacher/teacher.route.js";
-import { StaffRoute } from "./app/modules/staff/staff.route.js";
+import { TeacherRouter } from "./app/modules/faculty/faculty.route.js";
+import { StaffRoute } from "./app/modules/admin/admin.route.js";
 const app: Application = express();
 
 //parsers

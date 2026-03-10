@@ -3,7 +3,7 @@ import type {
   TeacherName,
   Teacher,
   TeacherContactInfo,
-} from "./teacher.interface.js";
+} from "./faculty.interface.js";
 
 const teacherNameSchema = new Schema<TeacherName>({
   firstName: { type: String, required: true, trim: true },

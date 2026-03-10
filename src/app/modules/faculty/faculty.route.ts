@@ -1,5 +1,5 @@
 import express from "express";
-import { TeacherController } from "./teacher.controller.js";
+import { TeacherController } from "./faculty.controller.js";
 
 const router = express.Router();
 
