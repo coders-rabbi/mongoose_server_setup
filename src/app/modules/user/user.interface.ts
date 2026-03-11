@@ -1,3 +1,5 @@
+import type { StringValidation } from "zod/v3";
+
 export type TUser = {
   id: string;
   password: string;
@@ -6,3 +8,5 @@ export type TUser = {
   isDeleted: boolean;
   status: "in-progress" | "blocked";
 };
+
+

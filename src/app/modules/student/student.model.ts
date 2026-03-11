@@ -91,6 +91,12 @@ const studentSchema = new Schema<TStudent, StudentModelType, StudentMethods>({
     required: [true, "Student ID is required"],
     unique: true,
   },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+    unique: true,
+  },
   name: {
     type: userNameSchema,
     required: [true, "Student name details are required"],
@@ -155,19 +161,18 @@ const studentSchema = new Schema<TStudent, StudentModelType, StudentMethods>({
     required: [true, "Local guardian details are required"],
   },
   profile_image: { type: String },
-  isActive: {
-    type: String,
-    enum: {
-      values: ["active", "blocked"],
-      message: "{VALUE} is not a valid status",
-    },
-    default: "active",
-  },
+  
 });
 
-studentSchema.methods.isUserExist = async function (id: string){
-  const user = await Student.findOne({ id }, { id: 1, email: 1, name: 1, isActive: 1 });
+studentSchema.methods.isUserExist = async function (id: string) {
+  const user = await Student.findOne(
+    { id },
+    { id: 1, email: 1, name: 1, isActive: 1 },
+  );
   return user;
-}
+};
 
-export const Student = model<TStudent, StudentModelType>("Student", studentSchema);
+export const Student = model<TStudent, StudentModelType>(
+  "Student",
+  studentSchema,
+);
