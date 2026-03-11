@@ -1,24 +1,24 @@
 import { model, Schema } from "mongoose";
 import type {
-  TeacherName,
-  Teacher,
-  TeacherContactInfo,
+  TteacherName,
+  Tteacher,
+  TteacherContactInfo,
 } from "./faculty.interface.js";
 
-const teacherNameSchema = new Schema<TeacherName>({
+const teacherNameSchema = new Schema<TteacherName>({
   firstName: { type: String, required: true, trim: true },
   middleName: { type: String, required: true, trim: true },
   lastName: { type: String, required: true, trim: true },
 });
 
-const teacherContactInfoSchema = new Schema<TeacherContactInfo>({
+const teacherContactInfoSchema = new Schema<TteacherContactInfo>({
   email: { type: String, required: true , unique: true},
   phone: { type: String, required: true, trim: true },
   currentAddress: { type: String, trim: true },
   permanentAddress: { type: String, trim: true },
 });
 
-const TeacherSchema = new Schema<Teacher>({
+const TeacherSchema = new Schema<Tteacher>({
   teacherId: { type: String, unique: true, required: true },
   Name: { type: teacherNameSchema, required: true },
   designation: { type: String, required: true },
@@ -33,4 +33,4 @@ const TeacherSchema = new Schema<Teacher>({
   status: { type: String, enum: ["active", "inactive"], default: "active" },
 });
 
-export const TeacherModel = model<Teacher>("Teacher", TeacherSchema);
+export const TeacherModel = model<Tteacher>("Teacher", TeacherSchema);

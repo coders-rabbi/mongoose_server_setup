@@ -1,20 +1,20 @@
 import { model, Schema } from "mongoose";
 import {
-  type StaffModel,
-  type TStaff,
-  type TStaffContactInfo,
-  type TStaffName,
+  type AdminModel,
+  type TAdmin,
+  type TAdminContactInfo,
+  type TAdminName,
 } from "./admin.interface.js";
 import bcrypt from "bcrypt";
 import config from "../../config/index.js";
 
-const StaffNameSchema = new Schema<TStaffName>({
+const AdminNameSchema = new Schema<TAdminName>({
   firstName: { type: String, required: true },
   middleName: { type: String, required: true },
   lastName: { type: String, required: true },
 });
 
-const StaffContactInfoSchema = new Schema<TStaffContactInfo>({
+const AdminContactInfoSchema = new Schema<TAdminContactInfo>({
   email: { type: String, required: true, unique: true },
   phoneNumber: { type: String, required: true },
   emergencyContact: { type: String, required: true },
@@ -22,11 +22,11 @@ const StaffContactInfoSchema = new Schema<TStaffContactInfo>({
   permanentAddress: { type: String, required: true },
 });
 
-const StaffSchema = new Schema<TStaff, StaffModel>(
+const AdminSchema = new Schema<TAdmin, AdminModel>(
   {
-    staffId: { type: String, required: true, unique: true },
+    adminId: { type: String, required: true, unique: true },
     password: { type: String, required: true, unique: true },
-    name: { type: StaffNameSchema, required: true },
+    name: { type: AdminNameSchema, required: true },
     role: {
       type: String,
       enum: [
@@ -42,7 +42,7 @@ const StaffSchema = new Schema<TStaff, StaffModel>(
     designation: { type: String, required: true },
     gender: { type: String, enum: ["Male", "Female", "Other"], required: true },
     date_of_birth: { type: Date, required: true },
-    contactInfo: { type: StaffContactInfoSchema, required: true },
+    contactInfo: { type: AdminContactInfoSchema, required: true },
     joining_date: { type: Date, required: true },
     salary: { type: Number, required: true },
     shift: { type: String, enum: ["Morning", "Day", "Night"], required: true },
@@ -62,12 +62,12 @@ const StaffSchema = new Schema<TStaff, StaffModel>(
 );
 
 //vitual
-StaffSchema.virtual("fullName").get(function () {
+AdminSchema.virtual("fullName").get(function () {
   return `${this.name.firstName} ${this.name.middleName} ${this.name.lastName}`;
 });
 
 // password hashing using bcrypt library
-StaffSchema.pre("save", async function () {
+AdminSchema.pre("save", async function () {
   const staffInfo = this;
   staffInfo.password = await bcrypt.hash(
     staffInfo.password,
@@ -75,25 +75,25 @@ StaffSchema.pre("save", async function () {
   );
 });
 
-StaffSchema.post("save", async function (doc) {
+AdminSchema.post("save", async function (doc) {
   doc.password = "";
 });
 
-StaffSchema.pre("find", async function (this: any) {
+AdminSchema.pre("find", async function (this: any) {
   this.find({ isdeleted: { $ne: true } });
 });
 
-StaffSchema.pre("findOne", async function (this: any) {
+AdminSchema.pre("findOne", async function (this: any) {
   this.find({ isdeleted: { $ne: true } });
 });
 
-StaffSchema.pre("aggregate", function (this: any) {
+AdminSchema.pre("aggregate", function (this: any) {
   this.pipeline().unshift({ $match: { isdeleted: { $ne: true } } });
 });
 
-StaffSchema.statics.isStaffExists = async function (staffId: string) {
-  const exsistingStaff = await Staff.findOne({ staffId });
+AdminSchema.statics.isStaffExists = async function (staffId: string) {
+  const exsistingStaff = await Admin.findOne({ staffId });
   return exsistingStaff;
 };
 
-export const Staff = model<TStaff, StaffModel>("Staff", StaffSchema);
+export const Admin = model<TAdmin, AdminModel>("Admin", AdminSchema);

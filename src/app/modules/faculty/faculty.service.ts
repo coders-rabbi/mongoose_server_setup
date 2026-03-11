@@ -1,7 +1,7 @@
-import type { Teacher } from "./faculty.interface.js";
+import type { Tteacher } from "./faculty.interface.js";
 import { TeacherModel } from "./faculty.model.js";
 
-const createTeacherIntoDB = async (teacher: Teacher) => {
+const createTeacherIntoDB = async (teacher: Tteacher) => {
   const result = await TeacherModel.create(teacher);
   return result;
 };

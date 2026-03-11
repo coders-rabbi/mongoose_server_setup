@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-const createStaffZodSchema = z.object({
-  staff: z.object({
-    staffId: z.string().min(1, "Staff ID is required"),
+const createAdminZodSchema = z.object({
+  adminInfo: z.object({
+    adminId: z.string().min(1, "Staff ID is required"),
     password: z.string().max(20, "password maximum 20 character"),
     name: z.object({
       firstName: z.string().min(1, "First name is required"),
@@ -36,6 +36,6 @@ const createStaffZodSchema = z.object({
   }),
 });
 
-export const StaffValidation = {
-  createStaffZodSchema,
+export const AdminValidation = {
+  createAdminZodSchema
 };

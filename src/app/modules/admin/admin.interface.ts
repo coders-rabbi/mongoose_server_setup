@@ -1,12 +1,12 @@
 import type { Model } from "mongoose";
 
-export type TStaffName = {
+export type TAdminName = {
   firstName: string;
   middleName: string;
   lastName: string;
 };
 
-export type TStaffContactInfo = {
+export type TAdminContactInfo = {
   email: string;
   phoneNumber: string;
   emergencyContact: string;
@@ -14,10 +14,10 @@ export type TStaffContactInfo = {
   permanentAddress: string;
 };
 
-export type TStaff = {
-  staffId: string; // যেমন: STF-2026-001
+export type TAdmin = {
+  adminId: string; // যেমন: STF-2026-001
   password: string;
-  name: TStaffName;
+  name: TAdminName;
   role:
     | "admin"
     | "accountant"
@@ -28,7 +28,7 @@ export type TStaff = {
   designation: string;
   gender: "Male" | "Female" | "Other";
   date_of_birth: Date;
-  contactInfo: TStaffContactInfo;
+  contactInfo: TAdminContactInfo;
   joining_date: Date;
   salary: number;
   shift: "Morning" | "Day" | "Night";
@@ -37,8 +37,9 @@ export type TStaff = {
   isdeleted: boolean
 };
 
-// StaffModel ইন্টারফেসটি Mongoose মডেলকে বর্ণনা করে এবং একটি কাস্টম স্ট্যাটিক মেথড isStaffExists অন্তর্ভুক্ত করে যা একটি staffId গ্রহণ করে এবং সংশ্লিষ্ট TStaff অবজেক্ট বা null রিটার্ন করে।
-export interface StaffModel extends Model<TStaff> {
-  isStaffExists(staffId: string): Promise<TStaff | null>;
+
+// AdminModel ইন্টারফেসটি Mongoose মডেলকে বর্ণনা করে এবং একটি কাস্টম স্ট্যাটিক মেথড isAdminExists অন্তর্ভুক্ত করে যা একটি adminId গ্রহণ করে এবং সংশ্লিষ্ট TAdmin অবজেক্ট বা null রিটার্ন করে।
+export interface AdminModel extends Model<TAdmin> {
+  isStaffExists(staffId: string): Promise<TAdmin | null>;
 }
 

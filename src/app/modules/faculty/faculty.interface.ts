@@ -1,24 +1,24 @@
-export type TeacherName = {
+export type TteacherName = {
   firstName: string;
   middleName?: string;
   lastName: string;
 };
 
-export type TeacherContactInfo = {
+export type TteacherContactInfo = {
   email: string;
   phone: string;
   currentAddress: string;
   permanentAddress: string;
 };
 
-export type Teacher = {
+export type Tteacher = {
   teacherId: string;
-  Name: TeacherName;
+  Name: TteacherName;
   designation: string;
   department: string;
   gender: string;
   date_of_birth: Date;
-  contactInfo: TeacherContactInfo;
+  contactInfo: TteacherContactInfo;
   qualification: string;
   joining_date: Date;
   experience: number;

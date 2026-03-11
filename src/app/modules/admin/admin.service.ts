@@ -1,34 +1,34 @@
-import type { TStaff } from "./admin.interface.js";
-import { Staff } from "./admin.model.js";
+import type { TAdmin } from "./admin.interface.js";
+import { Admin } from "./admin.model.js";
 
-const createStaffIntoDB = async (staff: TStaff) => {
-  if (await Staff.isStaffExists(staff.staffId)) {
-    throw new Error("Staff already exists");
+const createAdminIntoDB = async (adminInfo: TAdmin) => {
+  if (await Admin.isStaffExists(adminInfo.adminId)) {
+    throw new Error("Admin already exists");
   }
-  const result = await Staff.create(staff);
+  const result = await Admin.create(adminInfo);
   return result;
 };
 
 const getAllStaffsFromDB = async () => {
-  const result = await Staff.find();
+  const result = await Admin.find();
   return result;
 };
 
-const getSingleStaffFromDB = async (staffId: string) => {
-  const result = await Staff.findOne({ staffId: staffId });
+const getSingleStaffFromDB = async (adminId: string) => {
+  const result = await Admin.findOne({ adminId: adminId });
   return result;
 };
 
-const deleteSingleStaffFromDB = async (staffId: string) => {
-  const result = await Staff.updateOne(
-    { staffId: staffId },
+const deleteSingleStaffFromDB = async (adminId: string) => {
+  const result = await Admin.updateOne(
+    { adminId: adminId },
     { isdeleted: true },
   );
   return result;
 };
 
-export const StaffService = {
-  createStaffIntoDB,
+export const AdminService = {
+  createAdminIntoDB,
   getAllStaffsFromDB,
   getSingleStaffFromDB,
   deleteSingleStaffFromDB,

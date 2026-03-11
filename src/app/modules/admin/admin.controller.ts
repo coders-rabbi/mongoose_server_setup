@@ -1,18 +1,16 @@
 import type { Request, Response } from "express";
-import { StaffService } from "./admin.service.js";
-import { StaffValidation } from "./admin.zodValidation.js";
-import { Staff } from "./admin.model.js";
-import { success } from "zod";
+import { AdminService } from "./admin.service.js";
+import { AdminValidation } from "./admin.zodValidation.js";
 
-const createStaff = async (req: Request, res: Response) => {
+const createAdmin = async (req: Request, res: Response) => {
   try {
     const zodValidatedData =
-      await StaffValidation.createStaffZodSchema.parseAsync(req.body);
-    const result = await StaffService.createStaffIntoDB(zodValidatedData.staff);
+      await AdminValidation.createAdminZodSchema.parseAsync(req.body);
+    const result = await AdminService.createAdminIntoDB(zodValidatedData.adminInfo);
 
     res.status(200).json({
       success: true,
-      message: "Staff created successfully",
+      message: "Admin created successfully",
       data: result,
     });
   } catch (error: any) {
@@ -21,7 +19,7 @@ const createStaff = async (req: Request, res: Response) => {
       message:
         error.name === "ZodError"
           ? "Validation Error"
-          : error.message || "Failed to create staff",
+          : error.message || "Failed to create admin",
       error: error,
     });
   }
@@ -29,7 +27,7 @@ const createStaff = async (req: Request, res: Response) => {
 
 const getAllstaffs = async (req: Request, res: Response) => {
   try {
-    const result = await StaffService.getAllStaffsFromDB();
+    const result = await AdminService.getAllStaffsFromDB();
     res.status(200).json({
       success: true,
       message: "Staffs retrieved successfully",
@@ -47,7 +45,7 @@ const getAllstaffs = async (req: Request, res: Response) => {
 const getSingleStaff = async (req: Request, res: Response) => {
   try {
     const { staffId } = req.params;
-    const result = await StaffService.getSingleStaffFromDB(staffId as string);
+    const result = await AdminService.getSingleStaffFromDB(staffId as string);
     res.status(200).json({
       success: true,
       message: "Single Staff retrieved successfully",
@@ -65,7 +63,7 @@ const getSingleStaff = async (req: Request, res: Response) => {
 const deleteSingleStaff = async (req: Request, res: Response) => {
   try {
     const { staffId } = req.params;
-    const result = await StaffService.deleteSingleStaffFromDB(
+    const result = await AdminService.deleteSingleStaffFromDB(
       staffId as string,
     );
     res.status(200).json({
@@ -83,7 +81,7 @@ const deleteSingleStaff = async (req: Request, res: Response) => {
 };
 
 export const StaffController = {
-  createStaff,
+  createStaff: createAdmin,
   getAllstaffs,
   getSingleStaff,
   deleteSingleStaff,
