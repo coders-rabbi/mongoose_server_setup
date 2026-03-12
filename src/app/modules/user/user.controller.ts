@@ -1,7 +1,11 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { UserServices } from "./user.service.js";
 
-const createStudent = async (req: Request, res: Response) => {
+const createStudent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const { password, student: studentData } = req.body;
   try {
     const result = await UserServices.createStudentIntoDB(
@@ -14,11 +18,7 @@ const createStudent = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: "User failed to create",
-      error: error,
-    });
+    next(error);
   }
 };
 
