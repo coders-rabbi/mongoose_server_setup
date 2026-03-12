@@ -5,10 +5,9 @@ import express, {
   type Response,
 } from "express";
 import cors from "cors";
-import { StudentRoute } from "./app/modules/student/student.route.js";
-import { TeacherRouter } from "./app/modules/faculty/faculty.route.js";
-import { userRoute } from "./app/modules/user/user.route.js";
-import globalErrorHandler from "./app/globalErrorHandler/globalErrorHandler.js";
+import globalErrorHandler from "./app/middlewares/globalErrorHandler.js";
+import notFound from "./app/middlewares/notFound.js";
+import router from "./app/routes/index.js";
 const app: Application = express();
 
 //parsers
@@ -16,13 +15,16 @@ app.use(express.json());
 app.use(cors());
 
 //application routes
-app.use("/api/v1/students/", StudentRoute);
-app.use("/api/v1/teachers/", TeacherRouter);
-app.use("/api/v1/users/", userRoute);
+app.use("/api/v1/", router);
+
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello Rabbi!");
 });
 
+//global error handler
 app.use(globalErrorHandler);
+
+//not found error handler
+app.use(notFound);
 
 export default app;

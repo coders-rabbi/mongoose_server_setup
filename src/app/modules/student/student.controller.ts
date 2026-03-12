@@ -1,61 +1,66 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { StudentService } from "./student.service.js";
+import sendResponse from "../../utils/sendResponse.js";
+import status from "http-status";
 
-const createStudent = async (req: Request, res: Response) => {
+const createStudent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { student: studentData } = req.body;
 
     // will call service function to create student into database
     const result = await StudentService.createStudentIntoBD(studentData);
-    //send response
-    res.status(200).json({
+    sendResponse(res, {
       success: true,
+      statusCode: status.OK,
       message: "Student created successfully",
       data: result,
     });
   } catch (error: any) {
-    res.status(404).json({
-      success: false,
-      message: error.message || "Failed to create student",
-      error: error,
-    });
+    next(error);
   }
 };
 
-const getAllStudents = async (req: Request, res: Response) => {
+const getAllStudents = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const result = await StudentService.getAllStudentsFromBD();
-    res.status(200).json({
+    sendResponse(res, {
       success: true,
+      statusCode: status.OK,
       message: "Students retrieved successfully",
       data: result,
     });
   } catch (error) {
-    res.status(404).json({
-      success: false,
-      message: "Failed to retrieve students",
-      error: error,
-    });
+    next(error);
   }
 };
 
-const getSingleStudent = async (req: Request, res: Response) => {
+const getSingleStudent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { studentId } = req.params;
     const result = await StudentService.getSingleStudentsFromBD(
       studentId as string,
     );
-    res.status(200).json({
+
+    sendResponse(res, {
       success: true,
-      message: "Student retrieved successfully",
+      statusCode: status.OK,
+      message: "Students retrieved successfully",
       data: result,
     });
   } catch (error) {
-    res.status(404).json({
-      success: false,
-      message: "Failed to retrieve student",
-      error: error,
-    });
+    next(error);
   }
 };
 
