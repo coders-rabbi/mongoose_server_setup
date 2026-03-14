@@ -47,7 +47,7 @@ const localGuardianValidationSchema = z.object({
 });
 
 // Main Student Validation Schema
-export const studentValidationSchema = z.object({
+export const createStudentValidationSchema = z.object({
   student: z.object({
     name: userNameValidationSchema,
     gender: z.enum(["male", "female", "other"]),
@@ -68,5 +68,5 @@ export const studentValidationSchema = z.object({
 });
 
 export const StudentDataValidation = {
-  studentValidationSchema,
+  createStudentValidationSchema,
 };
