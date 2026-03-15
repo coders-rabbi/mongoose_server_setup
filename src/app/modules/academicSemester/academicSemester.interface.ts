@@ -1,16 +1,16 @@
 export type TAcademicSemesterName = "Autumn" | "Summar" | "Fall";
 export type TMonths =
-  | "january"
-  | "february"
-  | "march"
-  | "may"
-  | "june"
-  | "july"
-  | "august"
-  | "september"
-  | "october"
-  | "november"
-  | "december";
+  | "January"
+  | "February"
+  | "March"
+  | "May"
+  | "June"
+  | "July"
+  | "August"
+  | "September"
+  | "October"
+  | "November"
+  | "December";
 
 export type TAcademicSemesterCode = "01" | "02" | "03";
 

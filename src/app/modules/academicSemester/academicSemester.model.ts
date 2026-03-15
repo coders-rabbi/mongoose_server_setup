@@ -5,7 +5,6 @@ import {
   Months,
 } from "./academicSemester.const.js";
 import type { TAcademicSemester } from "./academicSemester.interface.js";
-import { error } from "node:console";
 
 const AcademicSemesterSchema = new Schema<TAcademicSemester>({
   name: { type: String, required: true, enum: AcademicSemesterName },
