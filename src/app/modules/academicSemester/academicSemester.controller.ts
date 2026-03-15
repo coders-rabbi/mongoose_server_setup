@@ -4,13 +4,15 @@ import sendResponse from "../../utils/sendResponse.js";
 import status from "http-status";
 
 const createAcademicSemester: RequestHandler = async (req, res, next) => {
-  const result = await AcademicSemesterServices.createAcademicSemesterIntoDB(
-    req.body,
-  );
+  const { AcademicSemester } = req.body;
+  const result =
+    await AcademicSemesterServices.createAcademicSemesterIntoDB(
+      AcademicSemester,
+    );
   sendResponse(res, {
     success: true,
     statusCode: status.OK,
-    message: "Students retrieved successfully",
+    message: "Academic Semester created successfully",
     data: result,
   });
 };

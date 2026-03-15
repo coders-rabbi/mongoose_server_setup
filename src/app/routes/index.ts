@@ -12,15 +12,15 @@ const moduleRoutes = [
     route: userRoute,
   },
   {
-    path: "students",
+    path: "/students",
     route: StudentRoute,
   },
   {
-    path: "teachers",
+    path: "/teachers",
     route: TeacherRouter,
   },
   {
-    path: "academic-semester",
+    path: "/academic-semester",
     route: AcademicSemesterRouters,
   },
 ];
