@@ -6,7 +6,7 @@ import { Student } from "./student.model.js";
 //   // const result = await Student.create(studentData);
 
 //   // create an instance method of student model and then save it into database
-//   const student = new Student(studentData);
+//   // const student = new Student(studentData);
 
 //   if (await student.isUserExist(studentData.id)) {
 //     throw new Error("Student already exists");
