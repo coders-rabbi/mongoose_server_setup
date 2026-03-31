@@ -165,9 +165,9 @@ const studentSchema = new Schema<TStudent, StudentModelType, StudentMethods>({
     ref: "AcademicSemester",
     required: true,
   },
-  academicFaculty: {
+  academicDepartment: {
     type: Schema.Types.ObjectId,
-    ref: "AcademicFaculty",
+    ref: "AcademicDepartment",
     required: true,
   },
   profile_image: { type: String },

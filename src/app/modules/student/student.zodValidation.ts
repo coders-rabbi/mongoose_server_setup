@@ -64,7 +64,7 @@ export const createStudentValidationSchema = z.object({
     guardian: guardianValidationSchema,
     local_guardian: localGuardianValidationSchema,
     academicSemester: z.string().nonempty("Academic semester is required"),
-    academicFaculty: z.string().nonempty("Academic faculty is required"),
+    academicDepartment: z.string().nonempty("Academic department is required"),
     profile_image: z.string().optional(),
   }),
 });

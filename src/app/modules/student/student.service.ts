@@ -22,10 +22,17 @@ const getAllStudentsFromBD = async () => {
 };
 
 const getSingleStudentsFromBD = async (id: string) => {
-  const result = await Student.findOne({ id }).populate("user");
+  const result = await Student.findOne({ id })
+    .populate("user")
+    .populate("academicSemester")
+    .populate({
+      path: "academicDepartment",
+      populate: {
+        path: "academicFaculty",
+      },
+    });
   return result;
 };
-
 
 export const StudentService = {
   // createStudentIntoBD,
