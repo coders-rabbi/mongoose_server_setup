@@ -12,8 +12,14 @@ router.post(
   ),
   AcademicDepartmentControllers.createAcademicDepartment,
 );
-
-router.get("/:id", AcademicDepartmentControllers.getSingleAcademicDepartment);
 router.get("/", AcademicDepartmentControllers.getAllAcademicDepartment);
+router.get("/:id", AcademicDepartmentControllers.getSingleAcademicDepartment);
+router.patch(
+  "/:id",
+  validationRequest(
+    AcademicDepartmentValidations.updateAcademicDepartmentValidationSchema,
+  ),
+  AcademicDepartmentControllers.updateAcademicDepartment,
+);
 
 export const AcademicDepartmentRoutes = router;

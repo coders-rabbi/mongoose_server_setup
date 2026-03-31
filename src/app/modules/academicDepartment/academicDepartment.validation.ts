@@ -14,7 +14,7 @@ const createAcademicDepartmentValidationSchema = z.object({
 const updateAcademicDepartmentValidationSchema = z.object({
   department: z.object({
     name: z.string().optional(),
-    academicFaculty: z.string(),
+    academicFaculty: z.string().optional(),
   }),
 });
 
