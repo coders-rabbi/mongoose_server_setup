@@ -1,9 +1,11 @@
+import status from "http-status";
+import AppError from "../../errors/appError.js";
 import type { TAdmin } from "./admin.interface.js";
 import { Admin } from "./admin.model.js";
 
 const createAdminIntoDB = async (adminInfo: TAdmin) => {
   if (await Admin.isStaffExists(adminInfo.adminId)) {
-    throw new Error("Admin already exists");
+    throw new AppError(status.CONFLICT, "Admin already exists", "");
   }
   const result = await Admin.create(adminInfo);
   return result;
