@@ -25,7 +25,7 @@ const updateAcademicDepartmentIntoBD = async (
   const result = await AcademicDepartment.findOneAndUpdate(
     { _id: id },
     payload,
-    { new: true },
+    { returnDocument: "after" },
   );
 
   return result;

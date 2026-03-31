@@ -17,14 +17,15 @@ import { Student } from "./student.model.js";
 // };
 
 const getAllStudentsFromBD = async () => {
-  const result = await Student.find();
+  const result = await Student.find().populate("user");
   return result;
 };
 
 const getSingleStudentsFromBD = async (id: string) => {
-  const result = await Student.findOne({ id }).populate("academicFaculty");
+  const result = await Student.findOne({ id }).populate("user");
   return result;
 };
+
 
 export const StudentService = {
   // createStudentIntoBD,
