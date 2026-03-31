@@ -3,16 +3,21 @@ import type { TAcademicDepartment } from "./academicDepartment.interface.js";
 
 export const academicDepartmentSchema = new Schema<TAcademicDepartment>({
   name: { type: String, required: true },
-  academicFaculty: { type: Schema.Types.ObjectId,
+  academicFaculty: {
+    type: Schema.Types.ObjectId,
     ref: "AcademicFaculty",
-    required: true },
+    required: true,
+  },
 });
 
-
-academicDepartmentSchema.pre("save", async function (next) {
-  
+academicDepartmentSchema.pre("save", async function () {
+  const isDepartmentExist = await AcademicDepartment.findOne({
+    name: this.name,
+  });
+  if (isDepartmentExist) {
+    throw new Error("Academic Department already exists");
+  }
 });
-
 
 export const AcademicDepartment = model<TAcademicDepartment>(
   "AcademicDepartment",
