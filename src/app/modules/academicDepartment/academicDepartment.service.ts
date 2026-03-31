@@ -6,8 +6,8 @@ const createAcademicDepartmentIntoBD = async (payload: TAcademicDepartment) => {
   return result;
 };
 
-const getAllAcademicDeparmentFromDB = async () => {
-  const result = AcademicDepartment.find();
+const getAllAcademicDepartmentFromDB = async () => {
+  const result = AcademicDepartment.find().populate("academicFaculty");
   return result;
 };
 
@@ -18,8 +18,25 @@ const getSingleAcademicDepartmentFromBD = async (id: string) => {
   return result;
 };
 
-export const AcademicDeparmentServices = {
+const updateAcademicDepartmentIntoBD = async (
+  id: string,
+  payload: Partial<TAcademicDepartment>,
+) => {
+  // const result = await AcademicDepartment.findByIdAndUpdate(id, payload, {
+  //   new: true,
+  // });
+
+  const result = await AcademicDepartment.findOneAndUpdate(
+    { _id: id },
+    payload,
+    { new: true },
+  );
+
+  return result;
+};
+
+export const AcademicDepartmentServices = {
   createAcademicDepartmentIntoBD,
-  getAllAcademicDeparmentFromDB,
+  getAllAcademicDepartmentFromDB,
   getSingleAcademicDepartmentFromBD,
 };

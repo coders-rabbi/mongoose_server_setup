@@ -22,7 +22,7 @@ const getAllStudentsFromBD = async () => {
 };
 
 const getSingleStudentsFromBD = async (id: string) => {
-  const result = await Student.findOne({ id });
+  const result = await Student.findOne({ id }).populate("academicFaculty");
   return result;
 };
 
