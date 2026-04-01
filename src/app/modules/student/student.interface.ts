@@ -40,6 +40,7 @@ export type TStudent = {
   academicSemester: Types.ObjectId;
   academicDepartment: Types.ObjectId;
   profile_image?: string;
+  isDeleted: boolean;
 };
 
 export type StudentMethods = {

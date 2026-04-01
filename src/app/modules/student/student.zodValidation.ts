@@ -66,6 +66,7 @@ export const createStudentValidationSchema = z.object({
     academicSemester: z.string().nonempty("Academic semester is required"),
     academicDepartment: z.string().nonempty("Academic department is required"),
     profile_image: z.string().optional(),
+    isDeleted: z.boolean().default(false),
   }),
 });
 

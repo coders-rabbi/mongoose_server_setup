@@ -171,7 +171,7 @@ const studentSchema = new Schema<TStudent, StudentModelType, StudentMethods>({
     required: true,
   },
   profile_image: { type: String },
-  
+  isDeleted: { type: Boolean, default: false },
 });
 
 studentSchema.methods.isUserExist = async function (id: string) {
