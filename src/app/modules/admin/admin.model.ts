@@ -91,9 +91,9 @@ AdminSchema.pre("aggregate", function (this: any) {
   this.pipeline().unshift({ $match: { isdeleted: { $ne: true } } });
 });
 
-AdminSchema.statics.isStaffExists = async function (staffId: string) {
-  const exsistingStaff = await Admin.findOne({ staffId });
-  return exsistingStaff;
+AdminSchema.statics.isAdminExist = async function (adminId: string) {
+  const existingAdmin = await Admin.findOne({ adminId });
+  return existingAdmin;
 };
 
 export const Admin = model<TAdmin, AdminModel>("Admin", AdminSchema);

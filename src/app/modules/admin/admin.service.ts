@@ -4,7 +4,7 @@ import type { TAdmin } from "./admin.interface.js";
 import { Admin } from "./admin.model.js";
 
 const createAdminIntoDB = async (adminInfo: TAdmin) => {
-  if (await Admin.isStaffExists(adminInfo.adminId)) {
+  if (await Admin.isAdminExists(adminInfo.adminId)) {
     throw new AppError(status.CONFLICT, "Admin already exists", "");
   }
   const result = await Admin.create(adminInfo);

@@ -27,7 +27,6 @@ const updateAcademicDepartmentIntoBD = async (
     payload,
     { returnDocument: "after" },
   );
-
   return result;
 };
 

@@ -40,6 +40,6 @@ export type TAdmin = {
 
 // AdminModel ইন্টারফেসটি Mongoose মডেলকে বর্ণনা করে এবং একটি কাস্টম স্ট্যাটিক মেথড isAdminExists অন্তর্ভুক্ত করে যা একটি adminId গ্রহণ করে এবং সংশ্লিষ্ট TAdmin অবজেক্ট বা null রিটার্ন করে।
 export interface AdminModel extends Model<TAdmin> {
-  isStaffExists(staffId: string): Promise<TAdmin | null>;
+  isAdminExists(adminId: string): Promise<TAdmin | null>;
 }
 

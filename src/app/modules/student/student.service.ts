@@ -38,6 +38,35 @@ const getSingleStudentsFromDB = async (id: string) => {
   return result;
 };
 
+const updateStudentIntoDB = async (id: string, payload: Partial<TStudent>) => {
+  const { name, guardian, local_guardian, ...remainingData } = payload; // student এর name, guardian, local_guardian আলাদা করে destructure করা হলো কারণ এগুলো update করার জন্য আলাদা logic লাগবে।
+
+  const modifiedData: Record<string, unknown> = { ...remainingData };
+
+  if (name && Object.keys(name).length) {
+    for (const [key, value] of Object.entries(name)) {
+      modifiedData[`name.${key}`] = value;
+    }
+  }
+
+  if (guardian && Object.keys(guardian).length) {
+    for (const [keys, value] of Object.entries(guardian)) {
+      modifiedData[`guardian.${keys}`] = value;
+    }
+  }
+
+  if (local_guardian && Object.keys(local_guardian).length) {
+    for (const [keys, value] of Object.entries(local_guardian)) {
+      modifiedData[`local_guardian.${keys}`] = value;
+    }
+  }
+
+  const result = await Student.findOneAndUpdate({ id }, modifiedData, {
+    returnDocument: "after",
+  });
+  return result;
+};
+
 const deleteStudentFromDB = async (id: string) => {
   const session = await mongoose.startSession();
   try {
@@ -65,6 +94,11 @@ const deleteStudentFromDB = async (id: string) => {
     return deletedStudent;
   } catch (error) {
     await session.abortTransaction();
+    throw new AppError(
+      status.BAD_REQUEST,
+      "Failed to delete student and user",
+      "",
+    );
   } finally {
     await session.endSession();
   }
@@ -75,4 +109,5 @@ export const StudentService = {
   getAllStudentsFromDB,
   getSingleStudentsFromDB,
   deleteStudentFromDB,
+  updateStudentIntoDB,
 };

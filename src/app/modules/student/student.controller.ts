@@ -28,6 +28,23 @@ const getSingleStudent = catchAsync(async (req, res) => {
   });
 });
 
+const updateStudent = catchAsync(async (req, res) => {
+  const { studentId } = req.params;
+const  {student}  = req.body; // validation body থেকে যদি student  Object আকারে আসে তাহলে সেই student name use করেই destructure করতে হবে।
+
+  const result = await StudentService.updateStudentIntoDB(
+    studentId as string,
+    student,
+  );
+
+  sendResponse(res, {
+    success: true,
+    statusCode: status.OK,
+    message: "Student updated successfully",
+    data: result,
+  });
+});
+
 const deleteStudent = catchAsync(async (req, res) => {
   const { studentId } = req.params;
   const result = await StudentService.deleteStudentFromDB(studentId as string);
@@ -43,5 +60,6 @@ const deleteStudent = catchAsync(async (req, res) => {
 export const StudentController = {
   getAllStudents,
   getSingleStudent,
+  updateStudent,
   deleteStudent,
 };
