@@ -5,7 +5,7 @@ import AppError from "../../errors/appError.js";
 import status from "http-status";
 
 export const academicDepartmentSchema = new Schema<TAcademicDepartment>({
-  name: { type: String, required: true },
+  name: { type: String, required: true, unique: true },
   academicFaculty: {
     type: Schema.Types.ObjectId,
     ref: "AcademicFaculty",
@@ -14,7 +14,7 @@ export const academicDepartmentSchema = new Schema<TAcademicDepartment>({
 });
 
 
-//pre save middleware to check if the department already exists
+// pre save middleware to check if the department already exists
 academicDepartmentSchema.pre("save", async function () {
   const isDepartmentExist = await AcademicDepartment.findOne({
     name: this.name,

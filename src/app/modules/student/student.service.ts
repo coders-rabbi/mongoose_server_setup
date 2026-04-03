@@ -39,7 +39,7 @@ const getSingleStudentsFromDB = async (id: string) => {
 };
 
 const updateStudentIntoDB = async (id: string, payload: Partial<TStudent>) => {
-  const { name, guardian, local_guardian, ...remainingData } = payload; // student এর name, guardian, local_guardian আলাদা করে destructure করা হলো কারণ এগুলো update করার জন্য আলাদা logic লাগবে।
+  const { name, guardian, local_guardian, ...remainingData } = payload; // student এর name, guardian, local_guardian আলাদা করে destructure করা হলো কারণ এগুলো update করার জন্য আলাদা logic লাগবে। কারণ এগুলো non-primitive data/nested object, তাই এগুলো update করার জন্য আলাদা logic লাগবে। বাকি data গুলো একসাথে update করা যাবে।
 
   const modifiedData: Record<string, unknown> = { ...remainingData };
 
@@ -63,6 +63,7 @@ const updateStudentIntoDB = async (id: string, payload: Partial<TStudent>) => {
 
   const result = await Student.findOneAndUpdate({ id }, modifiedData, {
     returnDocument: "after",
+    runValidators: true,
   });
   return result;
 };
